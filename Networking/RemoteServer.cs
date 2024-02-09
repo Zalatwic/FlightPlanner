@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
-namespace FlightPlanner {
+namespace FlightPlanner.Networking {
     internal class RemoteServer {
+
+        #region Variables
+        
         private string serverName;
         private string serverURL;
+
+        #endregion
+
+        #region Constructor
 
         public RemoteServer(string serverNameIn) {
             serverName = serverNameIn;
             serverURL = "https://" + serverNameIn + ".airlinesim.aero/";
         }
 
-        public string ReadWebsite(string requestExtension) {
-            /*HttpClient client = new HttpClient();
-            string responseHTML = await client.GetStringAsync(serverURL + requestExtension);*/
+        #endregion
 
+        #region Functions
+
+        public string ReadWebsite(string requestExtension) {
             Uri uri = new Uri(serverURL + requestExtension);
             HttpWebRequest currentRequest = (HttpWebRequest)HttpWebRequest.Create(uri);
             currentRequest.Method = "GET";
@@ -38,5 +41,8 @@ namespace FlightPlanner {
 
             return responseHTML;
         }
+
+        #endregion
+
     }
 }

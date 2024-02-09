@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using FlightPlanner.Objects;
 using FlightPlanner.Enums;
 
-namespace FlightPlanner {
+namespace FlightPlanner.Networking {
     internal class WebScraper {
+
+        #region Variables
+
         private RemoteServer currentInst;
         private WarningCarrier warnings;
+
+        #endregion
 
         #region Constructor
 
@@ -53,6 +52,10 @@ namespace FlightPlanner {
             return planeObjects;
         }
 
+        // 0 NAME           3 FRST #\SEAT   6 BUSI FA
+        // 1 ECON #\SEAT    4 #FA           7 FRST FA
+        // 2 BUSI #\SEAT    5 #ECON FA      9 ID
+        //
         public List<SeatConfiguration> GetSeatConfigurations() {
             string currentRegex = Expressions.GetConfigurationInformation;
             string currentHTML = currentInst.ReadWebsite("app/seating");
@@ -61,19 +64,30 @@ namespace FlightPlanner {
             MatchCollection regexConfigurationIDs = Regex.Matches(currentHTML, currentRegex);
             List<int> fleetIDs = regexConfigurationIDs.Cast<Match>().Select(x => int.Parse(x.Value)).ToList();
 
-            currentRegex = ""//Expressions.GetConfigurationInformation;
+            currentRegex = Expressions.GetConfigurationInformation;
             MatchCollection configurationInfo = Regex.Matches(currentHTML, currentRegex);
 
-            for (int x = 0; x < configurationInfo.Count; x++) {
-
-            }
-
             // Go into each configuation to read information about it.
-            foreach (int configurationID in fleetIDs) {
-                SeatConfiguration currentConfiguration = new SeatConfiguration();
+            foreach (Match currentMatch in configurationInfo) {
+                GroupCollection currentGroup = currentMatch.Groups;
+                SeatConfiguration currentConfiguration = new SeatConfiguration(currentGroup[0].Value, int.Parse(currentGroup[9].Value));
 
-                // Build the current ratings.
-                currentHTML = currentInst.ReadWebsite("app/seating/editor/" + configurationID.ToString() + "4203?1-1.0-editor~form-editor-deck~ratings~tab-link");
+                // Add the classes.
+                foreach (PassengerType type in Enum.GetValues(typeof(PassengerType))) {
+                    string[] currentValue = currentGroup[(int)type].Value.Split("<br/>");
+
+                    // String split successfully.
+                    if (currentGroup[(int)type].Value != currentValue[0]) {
+                        CabinObject currentCabin = new CabinObject(
+                            type,
+                            (SeatType)Enum.Parse(typeof(SeatType), currentValue[1].Replace("-", "").Replace(" ", "")),
+                            int.Parse(currentValue[0]),
+                            int.Parse(currentGroup[(int)type + 4].Value));
+                    }
+                }
+
+                // Build the current ratings, currentGroup[9] is the configuration ID.
+                currentHTML = currentInst.ReadWebsite("app/seating/editor/" + currentGroup[9].Value + "4203?1-1.0-editor~form-editor-deck~ratings~tab-link");
                 int currentDistance = 500;
 
                 foreach (RatingsDistance distance in Enum.GetValues(typeof(RatingsDistance))) {
@@ -82,11 +96,19 @@ namespace FlightPlanner {
                     Match currentRatings = Regex.Match(currentHTML, currentRegex);
                     GroupCollection currentRatingMatches = currentRatings.Groups;
 
-                    ratingObject.ChangeRating(PassengerType.Economy, distance, int.Parse(currentRatingMatches[0].Value));
-                    ratingObject.ChangeRating(PassengerType.Business, distance, int.Parse(currentRatingMatches[1].Value));
-                    ratingObject.ChangeRating(PassengerType.First, distance, int.Parse(currentRatingMatches[2].Value));
+                    currentConfiguration.ChangeRating(PassengerType.Economy, distance, int.Parse(currentRatingMatches[0].Value));
+                    currentConfiguration.ChangeRating(PassengerType.Business, distance, int.Parse(currentRatingMatches[1].Value));
+                    currentConfiguration.ChangeRating(PassengerType.First, distance, int.Parse(currentRatingMatches[2].Value));
                 }
+
+                // Get the ID of the current plane type.
+                currentRegex = String.Format(Expressions.GetConfigurationRating, currentDistance);
+                currentConfiguration.SetAircraftModel(int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value));
+
+                allConfigurations.Add(currentConfiguration);
             }
+
+            return allConfigurations;
         }
 
         public List<FleetObject> GetFleetsOwned(List<SeatConfiguration> currentConfigurations) {

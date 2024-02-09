@@ -1,9 +1,4 @@
 ﻿using FlightPlanner.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightPlanner {
     internal class Manwell {
@@ -12,7 +7,7 @@ namespace FlightPlanner {
 
         public static SeatConfiguration FindSeatConfiguration(List<SeatConfiguration> currentConfigurations, int planeModelID, int economySeats, int businessSeats, int firstSeats) {
             if (economySeats == 0 && businessSeats == 0 && firstSeats == 0) {
-                return new SeatConfiguration();
+                return new SeatConfiguration("UNASSIGNED", 0);
             }
             
             foreach (SeatConfiguration seatConfiguration in currentConfigurations) {
@@ -21,7 +16,7 @@ namespace FlightPlanner {
                 }
             }
 
-            return new SeatConfiguration();
+            return new SeatConfiguration("UNASSIGNED", 0);
         }
 
         #endregion

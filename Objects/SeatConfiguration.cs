@@ -1,9 +1,4 @@
 ﻿using FlightPlanner.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightPlanner.Objects {
 
@@ -11,17 +6,23 @@ namespace FlightPlanner.Objects {
     internal class SeatConfiguration {
 
         #region Constructors
-        public SeatConfiguration() {
+        public SeatConfiguration(string nameIn, int IDIn) {
+            Name = nameIn;
+            ID = IDIn;
             rating = new RatingObject();
             Cabins = new List<CabinObject>();
         }
 
-        public SeatConfiguration(RatingObject ratingIn) {
+        public SeatConfiguration(string nameIn, int IDIn, RatingObject ratingIn) {
+            Name = nameIn;
+            ID = IDIn;
             rating = ratingIn;
             Cabins = new List<CabinObject>();
         }
 
-        public SeatConfiguration(RatingObject ratingIn, List<CabinObject> cabinsIn) {
+        public SeatConfiguration(string nameIn, int IDIn, RatingObject ratingIn, List<CabinObject> cabinsIn) {
+            Name = nameIn;
+            ID = IDIn;
             rating = ratingIn;
             Cabins = cabinsIn;
         }
@@ -40,6 +41,11 @@ namespace FlightPlanner.Objects {
             private set;
         }
 
+        public int ID {
+            get;
+            private set;
+        }
+
         public string Name {
             get;
             private set;
@@ -53,6 +59,10 @@ namespace FlightPlanner.Objects {
         #endregion
 
         #region Functions
+
+        public void SetAircraftModel(int modelID) {
+            AircraftModelID = modelID;
+        }
 
         public void AddCabin(CabinObject cabin) {
             Cabins.Add(cabin);

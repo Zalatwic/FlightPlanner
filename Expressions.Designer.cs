@@ -70,7 +70,16 @@ namespace FlightPlanner {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (?:&lt;span&gt;)(.*)(?:&lt;\\/span&gt;\\s*.*href=\&quot;\\.\\.\\/action\\/enterprise\\/aircraftsType\\?id=)(\\d*)(?:.*\\s*.*\\s*.*\\s*.*\\s*\\.*\\s*.*\\s*.*number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*\\s*.*number\&quot;&gt;)(\\d*)(?:.*\\s*.*\\s*&lt;span&gt;)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:(?s).*?editor/)(\\d*).
+        ///   Looks up a localized string similar to (?&lt;=aircraftsType\\?id=)(\\d*).
+        /// </summary>
+        internal static string GetAircraftID {
+            get {
+                return ResourceManager.GetString("GetAircraftID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (?&lt;=&lt;td&gt;)(.*)(?:\\/td&gt;\\s*.*)(?:number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\&quot;&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*\\s*.*number\&quot;&gt;)(\\d*)(?:.*\\s*.*\\s*&lt;span&gt;)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:(?s).*?editor/)(\\d*).
         /// </summary>
         internal static string GetConfigurationInformation {
             get {

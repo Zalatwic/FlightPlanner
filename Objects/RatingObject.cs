@@ -1,11 +1,8 @@
 ﻿using FlightPlanner.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightPlanner.Objects {
+
+    [Serializable]
     internal class RatingObject {
 
         #region Constructor
@@ -43,5 +40,7 @@ namespace FlightPlanner.Objects {
         }
 
         #endregion
+
     }
+
 }
