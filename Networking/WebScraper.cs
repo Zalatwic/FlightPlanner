@@ -38,7 +38,7 @@ namespace FlightPlanner.Networking {
             AnsiConsole.Progress().Start(ctx => {
                 // Define tasks
                 var task = ctx.AddTask("[GREEN]GETTING PLANE IDS[/]");
-                double inc = 100 / planeFamilyIDs.Count();
+                double inc = 100.0 / planeFamilyIDs.Count();
 
                 foreach (string planeFamilyID in planeFamilyIDs) {
                     currentRegex = "(?<=aircraftsType\\?id=)(\\d+)";
@@ -59,7 +59,7 @@ namespace FlightPlanner.Networking {
             AnsiConsole.Progress().Start(ctx => {
                 // Define tasks
                 var task = ctx.AddTask("[BLUE]GETTING PLANE INFORMATION[/]");
-                double inc = 100 / planeIDs.Count();
+                double inc = 100.0 / planeIDs.Count();
 
                 foreach (string planeID in planeIDs) {
                     planeObjects.Add(int.Parse(planeID), PlaneObject.CreateFromAircraftTypeHTML(currentInst.ReadWebsite("action/enterprise/aircraftsType?id=" + planeID.ToString()), ref warnings));

@@ -327,7 +327,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Passengers
             try {
-                currentRegex = "(?<=<td>Passengers \\(max\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*)(\\S+)";
+                currentRegex = "(?<=<td>Passengers \\(max\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*\\D*)(\\d+)";
                 maxPax = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
