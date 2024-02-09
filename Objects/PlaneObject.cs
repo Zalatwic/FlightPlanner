@@ -217,7 +217,7 @@ namespace FlightPlanner.Objects {
             // Extract Price
             try {
                 currentRegex = "(?<=<td>List price<\\/td>\\s*<td class=\"text-right\">\\s*)(.*)(?= AS\\$)";
-                price = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
+                price = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value.Trim(), System.Globalization.NumberStyles.AllowThousands);
             }
 
             catch {
@@ -226,7 +226,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Letter Code
             try {
-                currentRegex = "(?<=<td>3 letter code<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>3 letter code<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 letterCode = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -236,7 +236,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Manufacturer
             try {
-                currentRegex = "(?<=<td>Manufacturer<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Manufacturer<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 manufacturer = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -246,7 +246,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Manufacturing Location
             try {
-                currentRegex = "(?<=<td>Manufacturing location<\\/td>\\s*<td class=\"text-right\">\\s*<a href=\".*</ a > \\()(.{ 3})";
+                currentRegex = "(?<=<td>Manufacturing location<\\/td>\\s*<td class=\"text-right\">\\s*<a href=\".*</a> \\()(.{3})";
                 manufacturingLocation = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -276,7 +276,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Quantity Produced
             try {
-                currentRegex = "(?<=<td>Quantity produced<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Quantity produced<\\/td>\\s*<td class=\"text-right\">\\s*.)(\\S+)";
                 quantityProduced = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -286,7 +286,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Popularity
             try {
-                currentRegex = "(?<=<td>Popularity with passengers<\\/td>\\s*<img src=\"../../assets/img/rating/)(\\d*)";
+                currentRegex = "(?<=<td>Popularity with passengers<\\/td>\\s*<td class=\"text-right\">\\s*<img src=\"../../assets/img/rating/)(\\d*)";
                 popularity = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -296,7 +296,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Type Rating
             try {
-                currentRegex = "(?<=<td>Type rating<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Type rating<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 typeRating = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -306,7 +306,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Cockpit Crew
             try {
-                currentRegex = "(?<=<td>Cockpit crew<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Cockpit crew<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 cockpitCrew = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -317,7 +317,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Payload
             try {
-                currentRegex = "(?<=<td>MPL \\(Maximum Payload\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>MPL \\(Maximum Payload\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*)(\\S+)";
                 maxPayload = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -327,7 +327,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Passengers
             try {
-                currentRegex = "(?<=<td>Passengers \\(max\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Passengers \\(max\\)<\\/td>\\s*<td class=\"text-right\" colspan=\"2\">\\s*)(\\S+)";
                 maxPax = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -337,8 +337,8 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Cargo (KG)
             try {
-                currentRegex = "(?<=<td>Total Cargo Capacity<\\/td>\\s*<td class=\"text - right\">\\s*[0123456789\\.]* m&sup3;\\s*</td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
-                maxCargo = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
+                currentRegex = "(?<=<td>Total Cargo Capacity<\\/td>\\s*<td class=\"text-right\">\\s*[0123456789\\.]* m&sup3;\\s*</td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
+                maxCargo = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands | System.Globalization.NumberStyles.AllowDecimalPoint);
             }
 
             catch {
@@ -347,8 +347,8 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Cargo (SQM)
             try {
-                currentRegex = "(?<=<td>Total Cargo Capacity<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
-                maxCargoSpace = double.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
+                currentRegex = "(?<=<td>Total Cargo Capacity<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
+                maxCargoSpace = double.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands | System.Globalization.NumberStyles.AllowDecimalPoint);
             }
 
             catch {
@@ -357,8 +357,8 @@ namespace FlightPlanner.Objects {
 
             // Extract Bulk Cargo (KG)
             try {
-                currentRegex = "(?<=<td>Bulk Cargo<\\/td>\\s*<td class=\"text - right\">\\s*[0123456789\\.]* m&sup3;\\s*</td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
-                bulkCargo = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
+                currentRegex = "(?<=<td>Bulk Cargo<\\/td>\\s*<td class=\"text-right\">\\s*[0123456789\\.]* m&sup3;\\s*</td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
+                bulkCargo = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands | System.Globalization.NumberStyles.AllowDecimalPoint);
             }
 
             catch {
@@ -367,8 +367,8 @@ namespace FlightPlanner.Objects {
 
             // Extract Bulk Cargo (SQM)
             try {
-                currentRegex = "(?<=<td>Bulk Cargo<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
-                bulkCargoSpace = double.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
+                currentRegex = "(?<=<td>Bulk Cargo<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
+                bulkCargoSpace = double.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands | System.Globalization.NumberStyles.AllowDecimalPoint);
             }
 
             catch {
@@ -377,7 +377,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Max Takeoff Weight (KG)
             try {
-                currentRegex = "(?<=<td>MTOW<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>MTOW<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 MTOW = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -387,7 +387,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Range (KM)
             try {
-                currentRegex = "(?<=<td>Range<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Range<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 range = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -397,7 +397,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Speed (KMPH)
             try {
-                currentRegex = "(?<=<td>Speed<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Speed<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 speed = int.Parse(Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value, System.Globalization.NumberStyles.AllowThousands);
             }
 
@@ -407,7 +407,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Takeoff Roll (M)
             try {
-                currentRegex = "(?<=<td>Ground roll takeoff<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Ground roll takeoff<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 rollTakeoff = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -417,7 +417,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Landing Roll (M)
             try {
-                currentRegex = "(?<=<td>Ground roll landing<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Ground roll landing<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 rollLanding = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 
@@ -437,7 +437,7 @@ namespace FlightPlanner.Objects {
 
             // Extract Maintenance Category
             try {
-                currentRegex = "(?<=<td>Maintenance category<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S*)";
+                currentRegex = "(?<=<td>Maintenance category<\\/td>\\s*<td class=\"text-right\">\\s*)(\\S+)";
                 maintenanceCategory = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value;
             }
 

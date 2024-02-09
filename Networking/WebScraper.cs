@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Spectre.Console;
 using FlightPlanner.Objects;
 using FlightPlanner.Enums;
 
@@ -23,7 +24,7 @@ namespace FlightPlanner.Networking {
 
         #region Functions
 
-        public Dictionary<string, PlaneObject> GetNewPlanesForSale() {
+        public Dictionary<int, PlaneObject> GetNewPlanesForSale() {
             // Start by loading all of the aircraft family IDs.
             string currentRegex = "(?<=aircraftsFamily\\?id=)(\\d+)";
             string currentHTML = currentInst.ReadWebsite("app/aircraft/manufacturers");
@@ -34,20 +35,39 @@ namespace FlightPlanner.Networking {
             // Iterate through each aircraft type and get IDs for each specific aircraft.
             List<string> planeIDs = new List<string>();
 
-            foreach (string planeFamilyID in planeFamilyIDs) {
-                currentRegex = "(?<=aircraftsType\\?id=)(\\d+)";
-                currentHTML = currentInst.ReadWebsite("action/enterprise/aircraftsFamily?id=" + planeFamilyID.ToString());
+            AnsiConsole.Progress().Start(ctx => {
+                // Define tasks
+                var task = ctx.AddTask("[GREEN]GETTING PLANE IDS[/]");
+                double inc = 100 / planeFamilyIDs.Count();
 
-                MatchCollection regexPlaneIDs = Regex.Matches(currentHTML, currentRegex);
-                planeIDs.AddRange(regexPlaneFamilyIDs.Cast<Match>().Select(x => x.Value).ToList());
-            }
+                foreach (string planeFamilyID in planeFamilyIDs) {
+                    currentRegex = "(?<=aircraftsType\\?id=)(\\d+)";
+                    currentHTML = currentInst.ReadWebsite("action/enterprise/aircraftsFamily?id=" + planeFamilyID.ToString());
+
+                    MatchCollection regexPlaneIDs = Regex.Matches(currentHTML, currentRegex);
+                    planeIDs.AddRange(regexPlaneIDs.Cast<Match>().Select(x => x.Value).ToList());
+
+                    task.Increment(inc);
+                }
+
+                task.StopTask();
+            });
 
             // Create a new plane object for each unique ID.
-            Dictionary<string, PlaneObject> planeObjects = new Dictionary<string, PlaneObject>();
+            Dictionary<int, PlaneObject> planeObjects = new Dictionary<int, PlaneObject>();
 
-            foreach (string planeID in planeIDs) {
-                planeObjects.Add(planeID, PlaneObject.CreateFromAircraftTypeHTML(currentInst.ReadWebsite("action/enterprise/aircraftsType?id=" + planeID.ToString()), ref warnings));
-            }
+            AnsiConsole.Progress().Start(ctx => {
+                // Define tasks
+                var task = ctx.AddTask("[BLUE]GETTING PLANE INFORMATION[/]");
+                double inc = 100 / planeIDs.Count();
+
+                foreach (string planeID in planeIDs) {
+                    planeObjects.Add(int.Parse(planeID), PlaneObject.CreateFromAircraftTypeHTML(currentInst.ReadWebsite("action/enterprise/aircraftsType?id=" + planeID.ToString()), ref warnings));
+                    task.Increment(inc);
+                }
+
+                task.StopTask();
+            });
 
             return planeObjects;
         }

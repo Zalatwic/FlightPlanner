@@ -1,17 +1,18 @@
-﻿using Spectre.Console;
+﻿using System.Text.Json;
+using Spectre.Console;
 using FlightPlanner;
 using FlightPlanner.Objects;
+using FlightPlanner.Networking;
 
 public static class Controller {
-    public static void Main(string[] args) {
+    public static async Task Main(string[] args) {
         WarningCarrier warnings = new WarningCarrier();
         RemoteServer currentServer = new RemoteServer("junkers");
         WebScraper currentScraper = new WebScraper(ref currentServer, ref warnings);
-        List<PlaneObject> planeObjects = currentScraper.GetNewPlanesForSale();
+        Dictionary<int, PlaneObject> planeObjects = currentScraper.GetNewPlanesForSale();
 
-        foreach (PlaneObject planeObject in planeObjects) {
-            AnsiConsole.Markup(planeObject.LetterCode);
-        }
+        await using FileStream createStream = File.Create(@"D:\planeObjects.json");
+        await JsonSerializer.SerializeAsync(createStream, planeObjects);
 
         AnsiConsole.Markup("[underline red]Hello[/] World!");
     }
