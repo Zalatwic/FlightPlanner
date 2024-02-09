@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FlightPlanner.Objects {
+
+    [Serializable]
     internal class PlaneObject {
 
         #region Constructor
@@ -491,4 +493,5 @@ namespace FlightPlanner.Objects {
 
         #endregion
     }
+
 }
