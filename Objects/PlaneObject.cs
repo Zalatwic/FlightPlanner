@@ -31,7 +31,7 @@ namespace FlightPlanner.Objects {
             string rollLandingIn,
             string noiseCategoryIn,
             string maintenanceCategoryIn,
-            bool[,] routeRestrictionsIn) {
+            bool[][] routeRestrictionsIn) {
 
             Price = priceIn;
             LetterCode = letterCodeIn;
@@ -178,7 +178,7 @@ namespace FlightPlanner.Objects {
             private set;
         }
 
-        public bool[,] RouteRestrictions {
+        public bool[][] RouteRestrictions {
             get;
             private set;
         }
@@ -212,7 +212,11 @@ namespace FlightPlanner.Objects {
             string rollLanding = "0";
             string noiseCategory = "FAIL";
             string maintenanceCategory = "FAIL";
-            bool[,] routeRestrictions = new bool[11, 11];
+            bool[][] routeRestrictions = new bool[11][];
+
+            for (int x = 0; x < 11; x++) {
+                routeRestrictions[x] = new bool[x];
+            }
 
             // Extract Price
             try {
@@ -450,7 +454,7 @@ namespace FlightPlanner.Objects {
                 for (int x = 0; x < 11; x++) {
                     for (int y = 0; y < 11; y++) {
                         currentRegex = "(?<=fa fa-check\\s)(.*)(?=\" title=\"" + x.ToString() + " - " + y.ToString() + ")";
-                        routeRestrictions[x, y] = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value == "good" ? true : false;
+                        routeRestrictions[x][y] = Regex.Match(currentHTML, currentRegex, RegexOptions.IgnoreCase).Value == "good" ? true : false;
                     }
                 }
             }
