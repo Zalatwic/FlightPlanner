@@ -3,7 +3,7 @@
 namespace FlightPlanner.Objects {
 
     [Serializable]
-    internal class SeatConfiguration {
+    public class SeatConfiguration {
 
         #region Constructors
         public SeatConfiguration(string nameIn, int IDIn) {

@@ -79,7 +79,7 @@ namespace FlightPlanner {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to node0157k6ratz0ycyloa56mw7pwr110412.node0.
+        ///   Looks up a localized string similar to node01vfgi7rbyzp4wn4bna1wcw39c49134.node0.
         /// </summary>
         internal static string JSESSIONID {
             get {

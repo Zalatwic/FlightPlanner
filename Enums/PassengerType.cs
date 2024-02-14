@@ -1,7 +1,7 @@
 ﻿namespace FlightPlanner.Enums {
 
     [Serializable]
-    internal enum PassengerType {
+    public enum PassengerType {
         Economy,
         Business,
         First

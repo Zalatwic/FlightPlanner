@@ -3,7 +3,7 @@
 namespace FlightPlanner.Objects {
 
     [Serializable]
-    internal class RatingObject {
+    public class RatingObject {
 
         #region Constructor
 
@@ -38,11 +38,11 @@ namespace FlightPlanner.Objects {
         }
 
         public void SetRating(PassengerType type, RatingsDistance distance, int rating) {
-            ratings[(int)type - 1][(int)distance - 1] = rating;
+            ratings[(int)type][(int)distance] = rating;
         }
 
         public double GetRating(PassengerType type, RatingsDistance distance) {
-            return ratings[(int)type - 1][(int)distance - 1];
+            return ratings[(int)type][(int)distance];
         }
 
         #endregion

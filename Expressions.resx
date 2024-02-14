@@ -121,10 +121,10 @@
     <value>(?&lt;=type=\"checkbox\")\\s*(?:id=\")(.*)(?:\"\\s* name = \"aircraftsContainer\"\\s* value =\"check\\d*\"&gt;\\s*.*\\s*.*\\s*&lt;span&gt;)(.*)(?:&lt;\\/span&gt;\\s*.*\\s*.*\\s*.*\" &gt;)(.*)(?:&lt;\\/ span &gt;\\s *.*\\s *.*\\s *.*\\s *.*\\s *.* id =)(\\d *)(?:\"&gt;)(.*)(?:&lt;\\/a&gt;\\s*.*\\s*.*\\s*.*\" &gt;)(.*)(?:&lt;\\/ a &gt;\\s *.*\\s *.\\s *.*\\s *.*&gt;)(.*)(?:\\syrs.*\\s *.*\\s.* \"&gt;)(.*)(?:%.*\\s*.*\\s*.*\" &gt;)(.*)(?:%.*\\s *.*\\s *.*\\s *.*\\s *&lt; span &gt;)(\\d *)(?:&lt;\\/ span &gt;\\/&lt; span &gt;)(\\d *)(?:&lt;\\/ span &gt;\\/&lt; span &gt;)(\\d *)(?:.*)</value>
   </data>
   <data name="GetAircraftID" xml:space="preserve">
-    <value>(?&lt;=aircraftsType\\?id=)(\\d*)</value>
+    <value>(?&lt;=aircraftsType\?id=)(\d*)</value>
   </data>
   <data name="GetConfigurationInformation" xml:space="preserve">
-    <value>(?&lt;=&lt;td&gt;)(.*)(?:\\/td&gt;\\s*.*)(?:number\"&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\"&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*number\"&gt;)(.*)(?:&lt;\\/td&gt;\\s*.*\\s*.*number\"&gt;)(\\d*)(?:.*\\s*.*\\s*&lt;span&gt;)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:\\D*)(\\d*)(?:(?s).*?editor/)(\\d*)</value>
+    <value>(?&lt;=&lt;td&gt;)(.*)(?:\/td&gt;\s*.*)(?:number"&gt;)(.*)(?:&lt;\/td&gt;\s*.*number"&gt;)(.*)(?:&lt;\/td&gt;\s*.*number"&gt;)(.*)(?:&lt;\/td&gt;\s*.*\s*.*number"&gt;)(\d*)(?:.*\s*.*\s*&lt;span&gt;)(\d*)(?:\D*)(\d*)(?:\D*)(\d*)(?:\D*)(\d*)(?:(?s).*?editor/)(\d*)</value>
   </data>
   <data name="GetConfigurationRating" xml:space="preserve">
     <value>(?&lt;={0} km&lt;\/th&gt;)(?:\s*.*\s*.*rating\/)(\d*)(?:.*\s*.*\s.*rating\/)(\d*)(?:.*\s*.*\s.*rating\/)(\d*)</value>

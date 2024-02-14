@@ -1,7 +1,7 @@
 ﻿namespace FlightPlanner.Objects {
 
     [Serializable]
-    internal class OwnedAircraft {
+    public class OwnedAircraft {
 
         #region Constructor
 

@@ -3,7 +3,7 @@
 namespace FlightPlanner.Objects {
 
     [Serializable]
-    internal class PlaneObject {
+    public class PlaneObject {
 
         #region Constructor
 

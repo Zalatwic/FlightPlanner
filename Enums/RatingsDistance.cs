@@ -1,7 +1,7 @@
 ﻿namespace FlightPlanner.Enums {
 
     [Serializable]
-    internal enum RatingsDistance {
+    public enum RatingsDistance {
         k500,
         k1500,
         k2500,

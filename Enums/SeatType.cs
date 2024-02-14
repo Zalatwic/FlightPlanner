@@ -1,11 +1,11 @@
 ﻿namespace FlightPlanner.Enums {
     
     [Serializable]
-    internal enum SeatType {
+   public enum SeatType {
         Slimline_HD,
         Standard,
-        Lesiure,
-        Lesiure_Plus,
+        Leisure,
+        Leisure_Plus,
         Comfort,
         Comfort_Plus,
         Recliner_Shorthaul,

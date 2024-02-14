@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Terminal.Gui" Version="1.15.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Expressions.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

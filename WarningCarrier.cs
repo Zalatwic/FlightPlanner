@@ -1,5 +1,5 @@
 ﻿namespace FlightPlanner {
-    internal class WarningCarrier {
+    public class WarningCarrier {
 
         #region Constructor
 
