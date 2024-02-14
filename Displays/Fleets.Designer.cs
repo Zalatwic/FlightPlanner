@@ -17,16 +17,26 @@ namespace FlightPlanner.Displays {
         
         private Terminal.Gui.FrameView fleetListFrame;
         
-        private Terminal.Gui.ListView listView;
+        private Terminal.Gui.ListView fleetList;
         
         private Terminal.Gui.FrameView informationFrame;
         
         private Terminal.Gui.FrameView planeListFrame;
+
+        private Terminal.Gui.ListView planeList;
+
+        private Terminal.Gui.ListWrapper fleetListInteractive;
+
+        private Terminal.Gui.ListWrapper planeListInteractive;
         
         private void InitializeComponent() {
+            fleetListInteractive = new ListWrapper(new string[] { });
+            planeListInteractive = new ListWrapper(new string[] { });
+
             this.planeListFrame = new Terminal.Gui.FrameView();
+            this.planeList = new Terminal.Gui.ListView();
             this.informationFrame = new Terminal.Gui.FrameView();
-            this.listView = new Terminal.Gui.ListView();
+            this.fleetList = new Terminal.Gui.ListView();
             this.fleetListFrame = new Terminal.Gui.FrameView();
             this.Width = Dim.Fill(0);
             this.Height = Dim.Fill(0);
@@ -54,20 +64,17 @@ namespace FlightPlanner.Displays {
             this.fleetListFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.fleetListFrame.Title = "FLEETS";
             this.Add(this.fleetListFrame);
-            this.listView.Width = 20;
-            this.listView.Height = 3;
-            this.listView.X = 0;
-            this.listView.Y = 0;
-            this.listView.Visible = true;
-            this.listView.Data = "listView";
-            this.listView.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.listView.Source = new Terminal.Gui.ListWrapper(new string[] {
-                        "Item1",
-                        "Item2",
-                        "Item3"});
-            this.listView.AllowsMarking = false;
-            this.listView.AllowsMultipleSelection = true;
-            this.fleetListFrame.Add(this.listView);
+            this.fleetList.Width = Dim.Percent(100f);
+            this.fleetList.Height = Dim.Percent(100f);
+            this.fleetList.X = 0;
+            this.fleetList.Y = 0;
+            this.fleetList.Visible = true;
+            this.fleetList.Data = "fleetList";
+            this.fleetList.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.fleetList.Source = fleetListInteractive;
+            this.fleetList.AllowsMarking = false;
+            this.fleetList.AllowsMultipleSelection = true;
+            this.fleetListFrame.Add(this.fleetList);
             this.informationFrame.Width = Dim.Percent(80f);
             this.informationFrame.Height = Dim.Percent(70f);
             this.informationFrame.X = Pos.Right(fleetListFrame);
@@ -94,6 +101,17 @@ namespace FlightPlanner.Displays {
             this.planeListFrame.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.planeListFrame.Title = "PLANES";
             this.Add(this.planeListFrame);
+            this.planeList.Width = Dim.Percent(100f);
+            this.planeList.Height = Dim.Percent(100f);
+            this.planeList.X = 0;
+            this.planeList.Y = 0;
+            this.planeList.Visible = true;
+            this.planeList.Data = "planeList";
+            this.planeList.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.planeList.Source = planeListInteractive;
+            this.planeList.AllowsMarking = false;
+            this.planeList.AllowsMultipleSelection = true;
+            this.planeListFrame.Add(this.planeList);
         }
     }
 }
